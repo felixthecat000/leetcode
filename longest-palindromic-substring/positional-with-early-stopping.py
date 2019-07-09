@@ -3,17 +3,18 @@ class Solution:
 
         s_len = len(s)
 
+        # handle small cases or set default return value
         if s_len == 0:
             return ''
         elif s_len == 1:
             return s
         else:
-            longest_palindrome = s[0]
+            longest_palindrome = s[0] 
         
         def get_max_len(pos_left, pos_right):
             """
             Auxiliary function for early stopping criteria.
-            Calculates the maximum palindrome length from starting position.
+            Calculates the maximum palindrome length from starting positions.
             """
 
             left = pos_left + 1 # maximum size on the left
@@ -23,7 +24,12 @@ class Solution:
             return max_size - adjustment
 
         def longest_palindrome_from_start_position(pos_left, pos_right):
-
+            """
+            Finds the longest palindrome from any valid starting position where
+            the starting position is the center of the palindrome.
+            """
+            assert pos_right - pos_left <= 1, 'Invalid start position for palindrome.'
+            
             if pos_left == pos_right:
                 pos_left = pos_left - 1
                 pos_right = pos_right + 1
@@ -37,20 +43,15 @@ class Solution:
                 pos_right += 1
 
             return candidate
-        
-        
+                
         # list of start positions, starting in the middle
         start_positions = []
         for x in range(1, s_len): 
             start_positions.append([[x-1, x], get_max_len(x-1, x)])
             start_positions.append([[x, x], get_max_len(x, x)])
-        
-        # remove last value as palindrome must be of len > 1
-        start_positions.pop()
 
         # sort on max length 
         start_positions = sorted(start_positions, key = lambda x: x[1], reverse=True)
-
         
         for (pos_left, pos_right), max_len in start_positions:
             # exit loop if maximum candidate length is less than existing palindrome
@@ -64,5 +65,4 @@ class Solution:
 
         return longest_palindrome
 
-print(Solution().longestPalindrome("aaaa"))
-# "babad" "cbbd"
+print(Solution().longestPalindrome("babad"))
