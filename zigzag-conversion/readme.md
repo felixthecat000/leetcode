@@ -1,6 +1,7 @@
 # Zig Zag Conversion
 
 https://leetcode.com/problems/zigzag-conversion/submissions/
+
 Runtime: 76 ms, faster than 48.72% of Python3 online submissions for ZigZag Conversion.
 Memory Usage: 12.9 MB, less than 100.00% of Python3 online submissions for ZigZag Conversion.
 

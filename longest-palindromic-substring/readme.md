@@ -1,6 +1,7 @@
 # Longest palindromic substring
 
 https://leetcode.com/problems/longest-palindromic-substring/
+
 Runtime: 244 ms, faster than 89.67% of Python3 online submissions for Longest Palindromic Substring.
 Memory Usage: 13.6 MB, less than 23.57% of Python3 online submissions for Longest Palindromic Substring.
 
