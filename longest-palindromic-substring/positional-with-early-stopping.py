@@ -3,15 +3,13 @@ class Solution:
 
         s_len = len(s)
 
-        # handle small cases
-        if s_len < 2:
+        if s_len == 0:
             return ''
-        if s_len == 2:
-            if s[0] == s[1]:
-                return s
-            else:
-                return ''
-
+        elif s_len == 1:
+            return s
+        else:
+            longest_palindrome = s[0]
+        
         def get_max_len(pos_left, pos_right):
             """
             Auxiliary function for early stopping criteria.
@@ -27,8 +25,8 @@ class Solution:
         def longest_palindrome_from_start_position(pos_left, pos_right):
 
             if pos_left == pos_right:
-                pos_left = pos - 1
-                pos_right = pos + 1
+                pos_left = pos_left - 1
+                pos_right = pos_right + 1
 
             candidate = ''
 
@@ -39,34 +37,32 @@ class Solution:
                 pos_right += 1
 
             return candidate
-
-
+        
+        
         # list of start positions, starting in the middle
         start_positions = []
         for x in range(1, s_len): 
             start_positions.append([[x-1, x], get_max_len(x-1, x)])
             start_positions.append([[x, x], get_max_len(x, x)])
-          
+        
+        # remove last value as palindrome must be of len > 1
+        start_positions.pop()
+
+        # sort on max length 
         start_positions = sorted(start_positions, key = lambda x: x[1], reverse=True)
-        print(start_positions)
 
-        # starting value
-        longest_palindrome = ''
-
-        """
-        for start_pos, max_len in start_positions:
-            # exit loop process if candidate length is less than already found longest palindromw
-            if len(longest_palindrome) > max_len:
+        
+        for (pos_left, pos_right), max_len in start_positions:
+            # exit loop if maximum candidate length is less than existing palindrome
+            if max_len <= len(longest_palindrome):
                 break
 
             # get candidate and update if it is the new longest palindrome
-            print(start_pos)
-            candidate = longest_palindrome_from_single_position(start_pos)
+            candidate = longest_palindrome_from_start_position(pos_left, pos_right)
             if len(candidate) > len(longest_palindrome):
                 longest_palindrome = candidate
 
         return longest_palindrome
-        """
 
 print(Solution().longestPalindrome("aaaa"))
 # "babad" "cbbd"
