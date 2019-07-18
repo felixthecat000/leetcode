@@ -9,21 +9,23 @@ class Solution:
             
             # set match char if wild card
             if char == '.':
-                char = s[0]
+                #if len(s_remainder) > 1 and star:
+                #    s_remainder = s_remainder[1:]
+                char = s_remainder[0]
 
-            if s[0] != char:
+            if s_remainder[0] != char:
                 if star:
                     return s_remainder
                 else:
-                    return ''
+                    raise Exception('No Match')
 
             # if in 'star' mode get run of same characters
             i = 1
             if star:
-                while (len(s) > i and (s[i] == s[0])):
+                while (len(s_remainder) > i and (s_remainder[i] == s_remainder[0])):
                     i += 1
 
-            return s[i:]
+            return s_remainder[i:]
 
         def select_char(pattern):
             
@@ -35,13 +37,12 @@ class Solution:
             # otherwise return standard match
             return pattern[0], False, pattern[1:]
 
-        while len(s) > 0 and len(p) > 0:
+        while len(s) > 0 or len(p) > 0:
+            # TODO: put char into memory, reuse if fails
             char, star, p = select_char(p)
             s = parse_char(s, char, star)
-
-        if len(s) == 0 and len(p) == 0:
             return True
-        else:
+        except:
             return False
 
 print(Solution().isMatch('ab', '.*'))
